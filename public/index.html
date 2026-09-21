@@ -24,7 +24,7 @@
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --sidebar-width: 250px;
             --header-height: 60px;
-            --bottom-nav-height: 65px;
+            --bottom-nav-height: 70px;
         }
 
         .dark {
@@ -43,14 +43,14 @@
         body { background-color: var(--bg); color: var(--text); transition: background-color 0.3s, color 0.3s; overflow-x: hidden; }
         a { color: var(--primary); text-decoration: none; }
         button { cursor: pointer; border: none; outline: none; font-weight: 500; font-size: 0.95rem; border-radius: 8px; transition: 0.2s; }
-        input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 1rem; outline: none; margin-bottom: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 1rem; outline: none; margin-bottom: 15px; }
         input:focus, select:focus, textarea:focus { border-color: var(--primary); }
         h1, h2, h3, h4 { margin-bottom: 0.5rem; color: var(--text); }
         
         /* LAYOUT */
         #app-container { display: flex; min-height: 100vh; }
         #sidebar { width: var(--sidebar-width); background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 10; }
-        .sidebar-header { padding: 20px; font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .sidebar-header { padding: 20px; font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; justify-content: space-between; }
         .nav-links { flex: 1; padding: 10px 0; overflow-y: auto; }
         .nav-item { padding: 12px 20px; display: flex; align-items: center; gap: 12px; color: var(--text-muted); cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
         .nav-item:hover, .nav-item.active { background: var(--bg); color: var(--primary); border-right: 3px solid var(--primary); }
@@ -65,15 +65,17 @@
         .view-section { display: none; animation: fadeIn 0.3s; }
         .view-section.active { display: block; }
 
-        #bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; height: var(--bottom-nav-height); background: var(--surface); border-top: 1px solid var(--border); z-index: 10; justify-content: space-around; align-items: center; }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; padding: 8px; gap: 4px; }
-        .bottom-nav-item.active { color: var(--primary); }
+        /* MOBILE BOTTOM NAV - FULLY LOADED */
+        #bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; height: var(--bottom-nav-height); background: var(--surface); border-top: 1px solid var(--border); z-index: 10; justify-content: space-around; align-items: center; padding: 0 5px; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.7rem; padding: 6px 2px; gap: 2px; flex: 1; }
+        .bottom-nav-item.active { color: var(--primary); font-weight: 600; }
+        .bottom-nav-item span { font-size: 0.65rem; }
 
         @media (max-width: 768px) {
             #sidebar { display: none; }
             #main-content { margin-left: 0; padding-bottom: var(--bottom-nav-height); }
             #bottom-nav { display: flex; }
-            #content-area { padding: 15px; }
+            #content-area { padding: 15px; padding-bottom: 80px; }
         }
 
         /* COMPONENTS */
@@ -83,7 +85,7 @@
         .stat-card .label { color: var(--text-muted); font-size: 0.9rem; }
         .stat-card .value { font-size: 1.8rem; font-weight: 700; color: var(--text); }
         
-        .btn { padding: 10px 16px; background: var(--primary); color: white; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; }
+        .btn { padding: 10px 16px; background: var(--primary); color: white; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; }
         .btn:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
         .btn-outline:hover { background: var(--surface-elevated); }
@@ -107,15 +109,15 @@
 
         /* MODALS */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-        .modal { background: var(--surface); width: 90%; max-width: 500px; border-radius: var(--radius); box-shadow: var(--shadow); max-height: 90vh; display: flex; flex-direction: column; animation: slideUp 0.3s; }
+        .modal { background: var(--surface); width: 92%; max-width: 500px; border-radius: var(--radius); box-shadow: var(--shadow); max-height: 90vh; display: flex; flex-direction: column; animation: slideUp 0.3s; }
         .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .modal-body { padding: 20px; overflow-y: auto; }
         .modal-footer { padding: 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
         
         /* TOASTS */
-        #toast-container { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; }
-        @media (min-width: 769px) { #toast-container { bottom: 20px; right: 20px; left: auto; transform: none; } }
-        .toast { background: var(--surface-elevated); color: var(--text); padding: 12px 20px; border-radius: 8px; box-shadow: var(--shadow); border-left: 4px solid var(--primary); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s, fadeOut 0.3s 2.7s forwards; }
+        #toast-container { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; align-items: center; }
+        @media (min-width: 769px) { #toast-container { bottom: 20px; right: 20px; left: auto; transform: none; align-items: flex-end; } }
+        .toast { background: var(--surface-elevated); color: var(--text); padding: 12px 20px; border-radius: 8px; box-shadow: var(--shadow); border-left: 4px solid var(--primary); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s, fadeOut 0.3s 2.7s forwards; width: 100%; }
 
         /* AUTH SCREEN */
         #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 20px; }
@@ -125,7 +127,7 @@
         .empty-state h3 { margin-bottom: 10px; }
         .empty-state p { color: var(--text-muted); margin-bottom: 20px; }
 
-        .pomodoro-display { font-size: 4rem; font-weight: 700; text-align: center; margin: 20px 0; font-variant-numeric: tabular-nums; }
+        .pomodoro-display { font-size: 3.5rem; font-weight: 700; text-align: center; margin: 20px 0; font-variant-numeric: tabular-nums; }
         .pomo-controls { display: flex; justify-content: center; gap: 10px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -248,16 +250,16 @@
                 <section id="view-gpa" class="view-section">
                     <div class="flex justify-between align-center" style="margin-bottom: 20px;">
                         <h2>GPA & CGPA Calculator</h2>
-                        <button class="btn" onclick="ui.openModal('gpa-modal')">+ Add Course Grade</button>
+                        <button class="btn" onclick="ui.openModal('gpa-modal')">+ Add Course</button>
                     </div>
                     
                     <div class="grid-cards mt-1">
                         <div class="card stat-card text-center" style="border-color: var(--primary);">
                             <span class="label">Overall GPA</span>
-                            <span class="value" id="gpa-total-display" style="font-size: 2.5rem; color: var(--primary);">0.00</span>
+                            <span class="value" id="gpa-total-display" style="font-size: 2.2rem; color: var(--primary);">0.00</span>
                         </div>
                         <div class="card stat-card text-center">
-                            <span class="label">Total Credits Earned</span>
+                            <span class="label">Total Credits</span>
                             <span class="value" id="gpa-credits-display">0</span>
                         </div>
                     </div>
@@ -272,7 +274,7 @@
                 <section id="view-assignments" class="view-section">
                     <div class="flex justify-between align-center" style="margin-bottom: 20px;">
                         <h2>Assignments</h2>
-                        <button class="btn" onclick="ui.openModal('assignment-modal')">+ Add Assignment</button>
+                        <button class="btn" onclick="ui.openModal('assignment-modal')">+ Add Task</button>
                     </div>
                     <div class="card" id="assignments-container"></div>
                 </section>
@@ -295,7 +297,8 @@
                     <h2>Settings</h2>
                     <div class="card mt-1">
                         <h3>Profile</h3>
-                        <input type="text" id="set-name" placeholder="Name" class="mt-1">
+                        <label style="font-size: 0.9rem; color: var(--text-muted);">Display Name</label>
+                        <input type="text" id="set-name" placeholder="Your Name" class="mt-1">
                         <button class="btn" onclick="app.updateProfile()">Save Profile</button>
                     </div>
                 </section>
@@ -303,12 +306,15 @@
             </main>
         </div>
 
-        <!-- MOBILE BOTTOM NAV -->
+        <!-- MOBILE BOTTOM NAV - FULL 7-FEATURE BAR -->
         <nav id="bottom-nav">
-            <div class="bottom-nav-item active" data-view="dashboard">🏠 <span>Home</span></div>
-            <div class="bottom-nav-item" data-view="subjects">📚 <span>Attend</span></div>
-            <div class="bottom-nav-item" data-view="gpa">🎓 <span>GPA</span></div>
-            <div class="bottom-nav-item" data-view="assignments">📝 <span>Tasks</span></div>
+            <div class="bottom-nav-item active" data-view="dashboard">🏠<span>Home</span></div>
+            <div class="bottom-nav-item" data-view="subjects">📚<span>Attend</span></div>
+            <div class="bottom-nav-item" data-view="grades">📊<span>Grades</span></div>
+            <div class="bottom-nav-item" data-view="gpa">🎓<span>GPA</span></div>
+            <div class="bottom-nav-item" data-view="assignments">📝<span>Tasks</span></div>
+            <div class="bottom-nav-item" data-view="study">⏱️<span>Timer</span></div>
+            <div class="bottom-nav-item" data-view="settings">⚙️<span>Config</span></div>
         </nav>
     </div>
 
@@ -326,8 +332,8 @@
                 <input type="number" id="sub-req" value="75" min="0" max="100">
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" id="sub-del-btn" style="display:none;" onclick="app.deleteSubject()">Delete Subject</button>
-                <button class="btn" onclick="app.saveSubject()">Save Subject</button>
+                <button class="btn btn-danger" id="sub-del-btn" style="display:none;" onclick="app.deleteSubject()">Delete</button>
+                <button class="btn" onclick="app.saveSubject()">Save</button>
             </div>
         </div>
 
@@ -351,7 +357,7 @@
                         <button class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);" onclick="app.markAttendance(false)">- Absent</button>
                     </div>
                     <div class="mt-1">
-                        <button class="btn btn-outline" style="font-size: 0.8rem; padding: 6px 12px; width: 100%; border-color: var(--warning); color: var(--warning);" onclick="app.undoAttendance()">↩ Undo Last Click (-1 Class)</button>
+                        <button class="btn btn-outline" style="font-size: 0.8rem; padding: 6px 12px; width: 100%; border-color: var(--warning); color: var(--warning);" onclick="app.undoAttendance()">↩ Undo Last Click (-1)</button>
                     </div>
                 </div>
                 <div class="card mt-1">
@@ -379,8 +385,8 @@
                 <input type="text" id="gpa-course" placeholder="e.g., Mathematics 101" required>
                 <label>Credits</label>
                 <input type="number" id="gpa-credits" placeholder="e.g., 3 or 4" min="1" required>
-                <label>Grade Point Earned (e.g., 10 for O/A+, 9 for A)</label>
-                <input type="number" id="gpa-grade" placeholder="Enter number (0 to 10)" step="0.1" min="0" required>
+                <label>Grade Point (0 to 10 scale)</label>
+                <input type="number" id="gpa-grade" placeholder="e.g., 10 for O, 9 for A" step="0.1" min="0" required>
             </div>
             <div class="modal-footer"><button class="btn" onclick="app.saveGpaCourse()">Save Grade</button></div>
         </div>
@@ -561,6 +567,7 @@
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('app-container').style.display = 'flex';
                 ui.setTheme(state.data.settings.theme || 'light');
+                document.getElementById('set-name').value = state.data.settings.name || state.user?.name || '';
                 this.navigate('dashboard');
                 this.renderAll();
             },
@@ -620,7 +627,7 @@
             deleteSubject() {
                 const id = document.getElementById('sub-id').value;
                 if(!id) return;
-                if(confirm('Are you sure you want to delete this subject and its attendance history?')) {
+                if(confirm('Are you sure you want to delete this subject?')) {
                     state.data.subjects = state.data.subjects.filter(s => s.id !== id);
                     if(state.data.grades && state.data.grades[id]) delete state.data.grades[id];
                     ui.closeModal();
@@ -643,10 +650,10 @@
                     const req = sub.required / 100; const current = sub.attended / sub.total;
                     if (current < req) {
                         const needed = Math.ceil((req * sub.total - sub.attended) / (1 - req));
-                        document.getElementById('det-safe-skip').innerHTML = `<span style="color:var(--danger)">Attend the next <b>${needed}</b> classes</span> to reach target.`;
+                        document.getElementById('det-safe-skip').innerHTML = `<span style="color:var(--danger)">Attend next <b>${needed}</b> classes</span> to reach target.`;
                     } else {
                         const skips = Math.floor((sub.attended / req) - sub.total);
-                        document.getElementById('det-safe-skip').innerHTML = skips === 0 ? `<span style="color:var(--warning)">Exactly on track. Do not skip.</span>` : `You can safely skip <b style="color:var(--success); font-size:1.2rem;">${skips}</b> classes.`;
+                        document.getElementById('det-safe-skip').innerHTML = skips === 0 ? `<span style="color:var(--warning)">Exactly on track. Do not skip.</span>` : `You can safely skip <b style="color:var(--success); font-size:1.1rem;">${skips}</b> classes.`;
                     }
                 }
                 ui.openModal('subject-detail-modal');
@@ -657,7 +664,7 @@
                 const sub = state.data.subjects.find(s => s.id === id);
                 if(!sub) return;
                 if(!sub.history) sub.history = [];
-                sub.history.push(present); // remember last click
+                sub.history.push(present);
                 sub.total++; if(present) sub.attended++;
                 this.saveLocal(); this.openSubjectDetail(id); 
             },
@@ -666,7 +673,7 @@
                 const id = document.getElementById('det-id').value;
                 const sub = state.data.subjects.find(s => s.id === id);
                 if(!sub || !sub.history || sub.history.length === 0) {
-                    return ui.toast('No attendance clicks to undo', 'warning');
+                    return ui.toast('No recent clicks to undo', 'warning');
                 }
                 const lastWasPresent = sub.history.pop();
                 sub.total--;
@@ -676,7 +683,7 @@
                 ui.toast('Last attendance undone');
             },
 
-            // --- GPA CALCULATOR LOGIC ---
+            // --- GPA CALCULATOR ---
             saveGpaCourse() {
                 const course = document.getElementById('gpa-course').value;
                 const credits = parseFloat(document.getElementById('gpa-credits').value);
@@ -685,7 +692,7 @@
                 
                 if(!state.data.gpaCourses) state.data.gpaCourses = [];
                 state.data.gpaCourses.push({ id: ui.generateId(), course, credits, grade });
-                ui.closeModal(); this.saveLocal(); ui.toast('Course Grade saved!');
+                ui.closeModal(); this.saveLocal(); ui.toast('Course saved!');
             },
             deleteGpaCourse(id) {
                 state.data.gpaCourses = state.data.gpaCourses.filter(c => c.id !== id);
@@ -697,7 +704,7 @@
                 const date = document.getElementById('ass-date').value;
                 if(!title || !date) return ui.toast('Missing fields', 'danger');
                 state.data.assignments.push({ id: ui.generateId(), title, dueDate: date, status: 'pending' });
-                ui.closeModal(); this.saveLocal();
+                ui.closeModal(); this.saveLocal(); ui.toast('Task added');
             },
             toggleAssignment(id) {
                 const a = state.data.assignments.find(x => x.id === id);
@@ -714,7 +721,7 @@
                 if(!state.data.grades) state.data.grades = {};
                 if(!state.data.grades[subId]) state.data.grades[subId] = [];
                 state.data.grades[subId].push({ id: ui.generateId(), name, status, weight, earned: parseFloat(document.getElementById('gr-earned').value)||0, max: parseFloat(document.getElementById('gr-max').value)||100 });
-                ui.closeModal(); this.saveLocal();
+                ui.closeModal(); this.saveLocal(); ui.toast('Assessment saved');
             },
 
             togglePomodoro() {
@@ -748,7 +755,7 @@
 
             updateProfile() {
                 state.data.settings.name = document.getElementById('set-name').value;
-                this.saveLocal(); ui.toast('Profile updated');
+                this.saveLocal(); ui.toast('Profile updated successfully');
             }
         };
 
@@ -792,7 +799,7 @@
                 let tCred = 0, tPoints = 0;
                 
                 if(!state.data.gpaCourses || state.data.gpaCourses.length === 0) {
-                    container.innerHTML = '<p class="text-muted" style="padding:20px 0;">No courses added yet. Add a course to calculate your GPA.</p>';
+                    container.innerHTML = '<p class="text-muted" style="padding:20px 0;">No courses added yet.</p>';
                     document.getElementById('gpa-total-display').textContent = '0.00';
                     document.getElementById('gpa-credits-display').textContent = '0';
                     return;
@@ -805,7 +812,7 @@
                         <div class="list-item">
                             <div class="list-item-content">
                                 <h4>${c.course}</h4>
-                                <p>Credits: ${c.credits} | Grade Point: ${c.grade}</p>
+                                <p>Credits: ${c.credits} | Grade: ${c.grade}</p>
                             </div>
                             <button class="icon-btn" onclick="app.deleteGpaCourse('${c.id}')" style="color:var(--danger)">🗑</button>
                         </div>`;
@@ -837,7 +844,7 @@
             grades() {
                 const subId = document.getElementById('grade-subject-select').value;
                 const container = document.getElementById('grade-planner-content');
-                if(!subId) { container.innerHTML = ''; return; }
+                if(!subId) { container.innerHTML = '<p class="text-muted">Please select a subject above.</p>'; return; }
                 const assessments = (state.data.grades && state.data.grades[subId]) ? state.data.grades[subId] : [];
                 let totW = 0, compW = 0, earnW = 0;
                 assessments.forEach(a => { totW += a.weight; if(a.status === 'Completed') { compW += a.weight; earnW += (a.earned / a.max) * a.weight; } });
@@ -848,10 +855,10 @@
                         <div class="card stat-card"><span class="label">Current Grade</span><span class="value" style="color:var(--primary)">${currGrade.toFixed(2)}%</span></div>
                         <div class="card stat-card"><span class="label">Weight Tracked</span><span class="value">${totW}%</span></div>
                     </div>
-                    <div class="flex justify-between align-center mb-1"><h3>Assessments</h3><button class="btn btn-outline" style="padding: 5px 10px;" onclick="ui.openModal('assessment-modal')">+ Add</button></div>
+                    <div class="flex justify-between align-center mb-1"><h3>Assessments</h3><button class="btn btn-outline" style="padding: 5px 10px;" onclick="ui.openModal('assessment-modal')">+ Add Assessment</button></div>
                     <div class="card">
                 `;
-                if(assessments.length === 0) html += `<p class="text-muted">No assessments added.</p>`;
+                if(assessments.length === 0) html += `<p class="text-muted">No assessments added for this subject.</p>`;
                 else assessments.forEach(a => { html += `<div class="list-item"><h4>${a.name} <span class="badge ${a.status==='Completed'?'success':'warning'}">${a.status}</span></h4><p>Weight: ${a.weight}%</p></div>`; });
                 container.innerHTML = html + `</div>`;
             }
