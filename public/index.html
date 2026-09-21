@@ -1,4 +1,4 @@
-!DOCTYPE html><
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title>CampusOS | One Dashboard</title>
     <meta name="theme-color" content="#4f46e5">
     <style>
+        /* CSS VARIABLES */
         :root {
             --bg: #f8fafc;
             --surface: #ffffff;
@@ -46,7 +47,8 @@
         input:focus, select:focus, textarea:focus { border-color: var(--primary); }
         h1, h2, h3, h4 { margin-bottom: 0.5rem; color: var(--text); }
         
-        #app-container { display: none; min-height: 100vh; }
+        /* LAYOUT */
+        #app-container { display: flex; min-height: 100vh; }
         #sidebar { width: var(--sidebar-width); background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 10; }
         .sidebar-header { padding: 20px; font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .nav-links { flex: 1; padding: 10px 0; overflow-y: auto; }
@@ -64,7 +66,7 @@
         .view-section.active { display: block; }
 
         #bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; height: var(--bottom-nav-height); background: var(--surface); border-top: 1px solid var(--border); z-index: 10; justify-content: space-around; align-items: center; }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; padding: 8px; gap: 4px; cursor:pointer;}
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; padding: 8px; gap: 4px; }
         .bottom-nav-item.active { color: var(--primary); }
 
         @media (max-width: 768px) {
@@ -74,6 +76,7 @@
             #content-area { padding: 15px; }
         }
 
+        /* COMPONENTS */
         .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .stat-card { display: flex; flex-direction: column; gap: 5px; }
@@ -85,7 +88,6 @@
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
         .btn-outline:hover { background: var(--surface-elevated); }
         .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #dc2626; }
         
         .progress-bar { width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; background: var(--primary); transition: width 0.3s; }
@@ -97,28 +99,31 @@
         .badge.success { background: rgba(16, 185, 129, 0.1); color: var(--success); }
         .badge.warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
         .badge.danger { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
-        .badge.primary { background: rgba(79, 70, 229, 0.1); color: var(--primary); }
 
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
         .list-item:last-child { border-bottom: none; padding-bottom: 0; }
         .list-item-content h4 { margin: 0; font-size: 1rem; }
         .list-item-content p { margin: 4px 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
+        /* MODALS */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal { background: var(--surface); width: 90%; max-width: 500px; border-radius: var(--radius); box-shadow: var(--shadow); max-height: 90vh; display: flex; flex-direction: column; animation: slideUp 0.3s; }
         .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .modal-body { padding: 20px; overflow-y: auto; }
         .modal-footer { padding: 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
         
+        /* TOASTS */
         #toast-container { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; }
         @media (min-width: 769px) { #toast-container { bottom: 20px; right: 20px; left: auto; transform: none; } }
         .toast { background: var(--surface-elevated); color: var(--text); padding: 12px 20px; border-radius: 8px; box-shadow: var(--shadow); border-left: 4px solid var(--primary); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s, fadeOut 0.3s 2.7s forwards; }
 
-        .empty-state { text-align: center; padding: 40px 20px; }
-        .empty-state p { color: var(--text-muted); }
-
+        /* AUTH SCREEN */
         #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 20px; }
-        .auth-card { width: 100%; max-width: 400px; text-align: center; }
+        .auth-card { width: 100%; max-width: 400px; }
+        
+        .empty-state { text-align: center; padding: 40px 20px; }
+        .empty-state h3 { margin-bottom: 10px; }
+        .empty-state p { color: var(--text-muted); margin-bottom: 20px; }
 
         .pomodoro-display { font-size: 4rem; font-weight: 700; text-align: center; margin: 20px 0; font-variant-numeric: tabular-nums; }
         .pomo-controls { display: flex; justify-content: center; gap: 10px; }
@@ -136,39 +141,45 @@
 </head>
 <body>
 
-    <!-- LOGIN / SIGNUP SCREEN -->
+    <!-- AUTH SCREEN -->
     <div id="auth-screen">
         <div class="card auth-card">
-            <h1 style="color: var(--primary); margin-bottom: 5px;">CampusOS</h1>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Your entire college life.</p>
+            <div class="text-center" style="margin-bottom: 20px;">
+                <h1 style="color: var(--primary);">CampusOS</h1>
+                <p class="text-muted">Your entire college life. One dashboard.</p>
+            </div>
             
             <form id="login-form">
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
-                <button type="submit" style="width: 100%;">Login</button>
-                <p style="margin-top: 15px; font-size: 0.9rem;">New here? <a href="#" id="show-signup">Create Account</a></p>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center;">Login</button>
+                <p class="text-center mt-1" style="font-size: 0.9rem;">
+                    Don't have an account? <a href="#" id="show-signup">Sign up</a>
+                </p>
             </form>
 
             <form id="signup-form" style="display: none;">
                 <input type="text" id="signup-name" placeholder="Full Name" required>
                 <input type="email" id="signup-email" placeholder="Email" required>
                 <input type="password" id="signup-password" placeholder="Password (min 6 chars)" required minlength="6">
-                <button type="submit" style="width: 100%;">Sign Up</button>
-                <p style="margin-top: 15px; font-size: 0.9rem;">Already have an account? <a href="#" id="show-login">Login</a></p>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center;">Create Account</button>
+                <p class="text-center mt-1" style="font-size: 0.9rem;">
+                    Already have an account? <a href="#" id="show-login">Login</a>
+                </p>
             </form>
-            <p id="auth-error" style="color: var(--danger); margin-top: 15px; display: none;"></p>
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
-    <div id="app-container">
+    <!-- MAIN APP -->
+    <div id="app-container" style="display: none;">
         <!-- DESKTOP SIDEBAR -->
         <aside id="sidebar">
             <div class="sidebar-header">CampusOS</div>
             <div class="nav-links" id="desktop-nav">
                 <div class="nav-item active" data-view="dashboard">🏠 Dashboard</div>
-                <div class="nav-item" data-view="subjects">📚 Subjects</div>
-                <div class="nav-item" data-view="grades">📊 Grades</div>
+                <div class="nav-item" data-view="subjects">📚 Attendance</div>
+                <div class="nav-item" data-view="grades">📊 Grade Planner</div>
+                <div class="nav-item" data-view="gpa">🎓 GPA Calculator</div>
                 <div class="nav-item" data-view="assignments">📝 Assignments</div>
                 <div class="nav-item" data-view="study">⏱️ Pomodoro</div>
                 <div class="nav-item" data-view="settings">⚙️ Settings</div>
@@ -178,9 +189,10 @@
         <div id="main-content">
             <!-- HEADER -->
             <header id="header">
-                <h2 id="page-title" style="margin: 0; font-size: 1.2rem;">Dashboard</h2>
+                <div><h2 id="page-title" style="margin: 0; font-size: 1.2rem;">Dashboard</h2></div>
                 <div class="header-actions">
-                    <span id="sync-status" style="font-size: 0.8rem; color: var(--success); padding: 4px 8px;">✓ Online</span>
+                    <span id="sync-status" style="font-size: 0.8rem; color: var(--text-muted);">✓ Synced</span>
+                    <button class="icon-btn" id="theme-toggle" title="Toggle Theme">🌙</button>
                     <button class="icon-btn" onclick="app.logout()" title="Logout">🚪</button>
                 </div>
             </header>
@@ -188,6 +200,7 @@
             <!-- CONTENT AREA -->
             <main id="content-area">
                 
+                <!-- DASHBOARD -->
                 <section id="view-dashboard" class="view-section active">
                     <div style="margin-bottom: 20px;">
                         <h2 id="dash-greeting">Welcome back!</h2>
@@ -200,31 +213,27 @@
                             <span class="value" id="dash-att">0%</span>
                         </div>
                         <div class="card stat-card">
-                            <span class="label">Pending Assignments</span>
-                            <span class="value" id="dash-assignments">0</span>
-                        </div>
-                        <div class="card stat-card">
-                            <span class="label">Subjects Tracked</span>
-                            <span class="value" id="dash-subjects">0</span>
+                            <span class="label">Current GPA</span>
+                            <span class="value" id="dash-gpa">0.00</span>
                         </div>
                     </div>
 
-                    <div class="grid-cards" style="grid-template-columns: 1fr;">
-                        <div class="card">
-                            <h3>Upcoming Action Items</h3>
-                            <div id="dash-actions" class="mt-1"></div>
-                        </div>
+                    <div class="card">
+                        <h3>Action Items</h3>
+                        <div id="dash-actions" class="mt-1"></div>
                     </div>
                 </section>
 
+                <!-- SUBJECTS / ATTENDANCE -->
                 <section id="view-subjects" class="view-section">
                     <div class="flex justify-between align-center" style="margin-bottom: 20px;">
-                        <h2>Subjects & Attendance</h2>
+                        <h2>Attendance Tracking</h2>
                         <button class="btn" onclick="ui.openModal('subject-modal')">+ Add Subject</button>
                     </div>
                     <div id="subjects-container" class="grid-cards"></div>
                 </section>
 
+                <!-- GRADES PLANNER -->
                 <section id="view-grades" class="view-section">
                     <div class="flex justify-between align-center" style="margin-bottom: 20px;">
                         <h2>Grade Planner</h2>
@@ -235,6 +244,31 @@
                     <div id="grade-planner-content"></div>
                 </section>
 
+                <!-- GPA CALCULATOR -->
+                <section id="view-gpa" class="view-section">
+                    <div class="flex justify-between align-center" style="margin-bottom: 20px;">
+                        <h2>GPA & CGPA Calculator</h2>
+                        <button class="btn" onclick="ui.openModal('gpa-modal')">+ Add Course Grade</button>
+                    </div>
+                    
+                    <div class="grid-cards mt-1">
+                        <div class="card stat-card text-center" style="border-color: var(--primary);">
+                            <span class="label">Overall GPA</span>
+                            <span class="value" id="gpa-total-display" style="font-size: 2.5rem; color: var(--primary);">0.00</span>
+                        </div>
+                        <div class="card stat-card text-center">
+                            <span class="label">Total Credits Earned</span>
+                            <span class="value" id="gpa-credits-display">0</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Course History</h3>
+                        <div id="gpa-container" class="mt-1"></div>
+                    </div>
+                </section>
+
+                <!-- ASSIGNMENTS -->
                 <section id="view-assignments" class="view-section">
                     <div class="flex justify-between align-center" style="margin-bottom: 20px;">
                         <h2>Assignments</h2>
@@ -243,25 +277,24 @@
                     <div class="card" id="assignments-container"></div>
                 </section>
 
+                <!-- STUDY / POMODORO -->
                 <section id="view-study" class="view-section">
-                    <h2>Pomodoro Timer</h2>
-                    <div class="grid-cards mt-1">
-                        <div class="card text-center" style="grid-column: 1 / -1;">
-                            <div class="pomodoro-display" id="pomo-time">25:00</div>
-                            <div class="pomo-controls">
-                                <button class="btn" id="btn-pomo-start">Start Focus</button>
-                                <button class="btn btn-outline" id="btn-pomo-reset">Reset</button>
-                            </div>
-                            <p class="text-muted mt-1" id="pomo-status">Ready to work</p>
+                    <h2>Study Pomodoro</h2>
+                    <div class="card text-center mt-1">
+                        <div class="pomodoro-display" id="pomo-time">25:00</div>
+                        <div class="pomo-controls">
+                            <button class="btn" id="btn-pomo-start">Start</button>
+                            <button class="btn btn-outline" id="btn-pomo-reset">Reset</button>
                         </div>
+                        <p class="text-muted mt-1" id="pomo-status">Focus Session</p>
                     </div>
                 </section>
 
+                <!-- SETTINGS -->
                 <section id="view-settings" class="view-section">
                     <h2>Settings</h2>
                     <div class="card mt-1">
                         <h3>Profile</h3>
-                        <label class="text-muted" style="display:block; margin-bottom:5px; font-size:0.9rem;">Your Name</label>
                         <input type="text" id="set-name" placeholder="Name" class="mt-1">
                         <button class="btn" onclick="app.updateProfile()">Save Profile</button>
                     </div>
@@ -273,48 +306,40 @@
         <!-- MOBILE BOTTOM NAV -->
         <nav id="bottom-nav">
             <div class="bottom-nav-item active" data-view="dashboard">🏠 <span>Home</span></div>
-            <div class="bottom-nav-item" data-view="subjects">📚 <span>Subjects</span></div>
+            <div class="bottom-nav-item" data-view="subjects">📚 <span>Attend</span></div>
+            <div class="bottom-nav-item" data-view="gpa">🎓 <span>GPA</span></div>
             <div class="bottom-nav-item" data-view="assignments">📝 <span>Tasks</span></div>
-            <div class="bottom-nav-item" data-view="settings">⚙️ <span>More</span></div>
         </nav>
     </div>
 
+    <!-- MODAL OVERLAY -->
     <div id="modal-overlay">
         
         <!-- Subject Modal -->
         <div class="modal" id="subject-modal">
-            <div class="modal-header">
-                <h3>Subject Details</h3>
-                <button class="icon-btn" onclick="ui.closeModal()">✕</button>
-            </div>
+            <div class="modal-header"><h3>Subject Details</h3><button class="icon-btn" onclick="ui.closeModal()">✕</button></div>
             <div class="modal-body">
                 <input type="hidden" id="sub-id">
                 <label>Subject Name</label>
-                <input type="text" id="sub-name" required placeholder="e.g. Data Structures">
+                <input type="text" id="sub-name" required>
                 <label>Required Attendance %</label>
                 <input type="number" id="sub-req" value="75" min="0" max="100">
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" id="sub-del-btn" style="display:none;" onclick="app.deleteSubject()">Delete</button>
-                <button class="btn" onclick="app.saveSubject()">Save</button>
-            </div>
+            <div class="modal-footer"><button class="btn" onclick="app.saveSubject()">Save</button></div>
         </div>
 
         <!-- Subject Detail / Safe Skip Modal -->
         <div class="modal" id="subject-detail-modal">
-            <div class="modal-header">
-                <h3 id="det-title">Subject</h3>
-                <button class="icon-btn" onclick="ui.closeModal()">✕</button>
-            </div>
+            <div class="modal-header"><h3 id="det-title">Subject</h3><button class="icon-btn" onclick="ui.closeModal()">✕</button></div>
             <div class="modal-body">
                 <input type="hidden" id="det-id">
                 <div class="card text-center">
                     <h4>Attendance</h4>
-                    <h2 id="det-att-pct" style="margin: 10px 0; color: var(--primary); font-size: 2.5rem;">0%</h2>
+                    <h2 id="det-att-pct" style="margin: 10px 0; color: var(--primary);">0%</h2>
                     <p id="det-att-text" class="text-muted">0 attended / 0 total</p>
                     <div class="flex justify-center gap-2 mt-1">
-                        <button class="btn btn-outline" onclick="app.markAttendance(true)" style="color: var(--success); border-color: var(--success);">+ Attended</button>
-                        <button class="btn btn-outline" onclick="app.markAttendance(false)" style="color: var(--danger); border-color: var(--danger);">- Missed</button>
+                        <button class="btn btn-outline" onclick="app.markAttendance(true)">+ Present</button>
+                        <button class="btn btn-outline" onclick="app.markAttendance(false)">- Absent</button>
                     </div>
                 </div>
                 <div class="card mt-1">
@@ -322,21 +347,30 @@
                     <p id="det-safe-skip" class="mt-1 font-weight:bold;"></p>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" onclick="app.deleteSubjectFromDetail()">Delete Subject</button>
-            </div>
         </div>
 
         <!-- Assignment Modal -->
         <div class="modal" id="assignment-modal">
             <div class="modal-header"><h3>Assignment</h3><button class="icon-btn" onclick="ui.closeModal()">✕</button></div>
             <div class="modal-body">
-                <input type="text" id="ass-title" placeholder="Assignment Title" required>
-                <select id="ass-sub"></select>
-                <label>Due Date</label>
+                <input type="text" id="ass-title" placeholder="Title" required>
                 <input type="date" id="ass-date" required>
             </div>
             <div class="modal-footer"><button class="btn" onclick="app.saveAssignment()">Save</button></div>
+        </div>
+
+        <!-- GPA Course Modal -->
+        <div class="modal" id="gpa-modal">
+            <div class="modal-header"><h3>Add Course Grade</h3><button class="icon-btn" onclick="ui.closeModal()">✕</button></div>
+            <div class="modal-body">
+                <label>Course / Subject Name</label>
+                <input type="text" id="gpa-course" placeholder="e.g., Mathematics 101" required>
+                <label>Credits</label>
+                <input type="number" id="gpa-credits" placeholder="e.g., 3 or 4" min="1" required>
+                <label>Grade Point Earned (e.g., 10 for O/A+, 9 for A)</label>
+                <input type="number" id="gpa-grade" placeholder="Enter number (0 to 10)" step="0.1" min="0" required>
+            </div>
+            <div class="modal-footer"><button class="btn" onclick="app.saveGpaCourse()">Save Grade</button></div>
         </div>
 
         <!-- Grade Assessment Modal -->
@@ -345,17 +379,14 @@
             <div class="modal-body">
                 <input type="text" id="gr-name" placeholder="Name (e.g. Midterm)" required>
                 <label>Status</label>
-                <select id="gr-status">
-                    <option value="Completed">Completed</option>
-                    <option value="Remaining">Remaining</option>
-                </select>
-                <label>Weight in Final Grade (%)</label>
+                <select id="gr-status"><option value="Completed">Completed</option><option value="Remaining">Remaining</option></select>
+                <label>Weight (%)</label>
                 <input type="number" id="gr-weight" min="1" max="100" required>
                 <div id="gr-score-group">
                     <label>Score Earned</label>
                     <input type="number" id="gr-earned">
-                    <label>Max Score Possible</label>
-                    <input type="number" id="gr-max" value="100">
+                    <label>Max Score</label>
+                    <input type="number" id="gr-max">
                 </div>
             </div>
             <div class="modal-footer"><button class="btn" onclick="app.saveAssessment()">Save</button></div>
@@ -367,24 +398,21 @@
     <div id="toast-container"></div>
 
     <script>
+        // === CORE APP STATE ===
         const state = {
-            token: localStorage.getItem('token'),
-            user: JSON.parse(localStorage.getItem('user')),
-            data: { settings: { name: 'Sivaduth N' }, subjects: [], assignments: [], grades: {} },
-            pomodoro: { timer: null, timeLeft: 1500, mode: 'work' }
+            token: localStorage.getItem('campusOS_token') || null,
+            user: JSON.parse(localStorage.getItem('campusOS_user') || 'null'),
+            data: {
+                settings: { theme: 'light', name: '' },
+                subjects: [],
+                assignments: [],
+                gpaCourses: [], 
+                grades: {}
+            },
+            pomodoro: { timer: null, timeLeft: 1500, mode: 'work' } 
         };
 
-        const api = {
-            async req(endpoint, method = 'GET', body = null) {
-                const headers = { 'Content-Type': 'application/json' };
-                if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
-                const res = await fetch(`/api${endpoint}`, { method, headers, body: body ? JSON.stringify(body) : null });
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.error);
-                return data;
-            }
-        };
-
+        // === UTILS & UI ===
         const ui = {
             toast(msg, type = 'primary') {
                 const container = document.getElementById('toast-container');
@@ -395,377 +423,369 @@
                 container.appendChild(t);
                 setTimeout(() => t.remove(), 3000);
             },
-            openModal(id, data = null) {
+            openModal(id) {
                 document.getElementById('modal-overlay').style.display = 'flex';
                 document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
                 document.getElementById(id).style.display = 'flex';
-                if(!data) {
-                    document.querySelectorAll(`#${id} input:not([type=hidden]):not([type=date])`).forEach(i => i.value = '');
-                    if(document.getElementById('gr-max')) document.getElementById('gr-max').value = 100;
-                    if(document.getElementById('sub-req')) document.getElementById('sub-req').value = 75;
-                }
+                document.querySelectorAll(`#${id} input:not([type=hidden])`).forEach(i => i.value = '');
             },
-            closeModal() { document.getElementById('modal-overlay').style.display = 'none'; },
+            closeModal() {
+                document.getElementById('modal-overlay').style.display = 'none';
+            },
             generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); },
-            formatDate(d) { return d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''; }
+            formatDate(d) { return d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''; },
+            setTheme(theme) {
+                if(theme === 'dark') document.body.classList.add('dark');
+                else document.body.classList.remove('dark');
+                state.data.settings.theme = theme;
+            }
         };
 
+        // === API & SYNC ===
+        const api = {
+            baseURL: '/api',
+            async req(endpoint, method = 'GET', body = null) {
+                const headers = { 'Content-Type': 'application/json' };
+                if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
+                try {
+                    const res = await fetch(`${this.baseURL}${endpoint}`, { method, headers, body: body ? JSON.stringify(body) : null });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || 'Request failed');
+                    return data;
+                } catch (e) { throw e; }
+            },
+            async syncUp() {
+                if (!state.token) return;
+                try {
+                    await this.req('/data', 'PUT', { data: state.data });
+                    document.getElementById('sync-status').textContent = '✓ Synced';
+                } catch (e) {
+                    document.getElementById('sync-status').textContent = '⚠️ Sync Failed';
+                }
+            },
+            async syncDown() {
+                if (!state.token) return;
+                try {
+                    const res = await this.req('/data');
+                    if (res.data) {
+                        state.data = { ...state.data, ...res.data };
+                        if(!state.data.gpaCourses) state.data.gpaCourses = []; // Safety check
+                        app.saveLocal(false);
+                        app.renderAll();
+                    }
+                } catch (e) { console.error('Download sync failed', e); }
+            }
+        };
+
+        // === APP LOGIC ===
         const app = {
             init() {
                 document.getElementById('show-signup').onclick = (e) => { e.preventDefault(); document.getElementById('login-form').style.display='none'; document.getElementById('signup-form').style.display='block'; };
                 document.getElementById('show-login').onclick = (e) => { e.preventDefault(); document.getElementById('signup-form').style.display='none'; document.getElementById('login-form').style.display='block'; };
+                document.getElementById('login-form').onsubmit = this.login.bind(this);
+                document.getElementById('signup-form').onsubmit = this.signup.bind(this);
                 
-                document.getElementById('login-form').onsubmit = async (e) => {
-                    e.preventDefault();
-                    try {
-                        const res = await api.req('/login', 'POST', { email: document.getElementById('login-email').value, password: document.getElementById('login-password').value });
-                        this.setAuth(res);
-                    } catch (err) { this.showError(err.message); }
+                document.getElementById('theme-toggle').onclick = () => {
+                    const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+                    ui.setTheme(newTheme);
+                    this.saveLocal();
                 };
 
-                document.getElementById('signup-form').onsubmit = async (e) => {
-                    e.preventDefault();
-                    try {
-                        const res = await api.req('/signup', 'POST', { name: document.getElementById('signup-name').value, email: document.getElementById('signup-email').value, password: document.getElementById('signup-password').value });
-                        this.setAuth(res);
-                    } catch (err) { this.showError(err.message); }
-                };
+                document.querySelectorAll('[data-view]').forEach(el => {
+                    el.onclick = () => this.navigate(el.dataset.view);
+                });
 
-                document.querySelectorAll('[data-view]').forEach(el => { el.onclick = () => this.navigate(el.dataset.view); });
-                document.getElementById('gr-status').onchange = (e) => { document.getElementById('gr-score-group').style.display = e.target.value === 'Completed' ? 'block' : 'none'; };
+                if (state.token) {
+                    this.showApp();
+                    api.syncDown();
+                } else {
+                    document.getElementById('auth-screen').style.display = 'flex';
+                }
+
                 document.getElementById('btn-pomo-start').onclick = this.togglePomodoro.bind(this);
                 document.getElementById('btn-pomo-reset').onclick = this.resetPomodoro.bind(this);
+                document.getElementById('gr-status').onchange = (e) => { document.getElementById('gr-score-group').style.display = e.target.value === 'Completed' ? 'block' : 'none'; };
+                setInterval(() => { if(state.token) api.syncUp(); }, 60000); 
+            },
 
-                if (state.token) this.loadApp();
-            },
-            showError(msg) {
-                const el = document.getElementById('auth-error');
-                el.textContent = msg; el.style.display = 'block';
-            },
-            setAuth(res) {
-                localStorage.setItem('token', res.token);
-                localStorage.setItem('user', JSON.stringify(res.user));
-                state.token = res.token; state.user = res.user;
-                this.loadApp();
-            },
-            logout() {
-                localStorage.clear();
-                location.reload();
-            },
-            async loadApp() {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('app-container').style.display = 'flex';
-                
-                try {
-                    const res = await api.req('/data');
-                    if (res.data && res.data.subjects) state.data = res.data;
-                    
-                    if (!state.data.settings) state.data.settings = {};
-                    if (!state.data.settings.name) state.data.settings.name = state.user.name;
-                    
-                    document.getElementById('set-name').value = state.data.settings.name;
-                    this.navigate('dashboard');
-                } catch (e) {
-                    if(e.message === 'Access denied.' || e.message === 'Invalid token.') this.logout();
-                }
-            },
-            async sync() {
-                document.getElementById('sync-status').textContent = 'Syncing...';
-                document.getElementById('sync-status').style.color = 'var(--warning)';
-                try {
-                    await api.req('/data', 'PUT', { data: state.data });
-                    document.getElementById('sync-status').textContent = '✓ Saved';
-                    document.getElementById('sync-status').style.color = 'var(--success)';
-                } catch(e) {
-                    document.getElementById('sync-status').textContent = '⚠️ Error';
-                    document.getElementById('sync-status').style.color = 'var(--danger)';
-                }
+            saveLocal(triggerSync = true) {
+                if(triggerSync) api.syncUp();
                 this.renderAll();
             },
+
+            async login(e) {
+                e.preventDefault();
+                try {
+                    const res = await api.req('/login', 'POST', { email: document.getElementById('login-email').value, password: document.getElementById('login-password').value });
+                    this.setAuth(res);
+                } catch (err) { ui.toast(err.message, 'danger'); }
+            },
+
+            async signup(e) {
+                e.preventDefault();
+                try {
+                    const res = await api.req('/signup', 'POST', { name: document.getElementById('signup-name').value, email: document.getElementById('signup-email').value, password: document.getElementById('signup-password').value });
+                    this.setAuth(res);
+                } catch (err) { ui.toast(err.message, 'danger'); }
+            },
+
+            setAuth(res) {
+                state.token = res.token;
+                state.user = res.user;
+                localStorage.setItem('campusOS_token', res.token);
+                localStorage.setItem('campusOS_user', JSON.stringify(res.user));
+                this.showApp();
+                api.syncDown();
+                ui.toast('Welcome to CampusOS!', 'success');
+            },
+
+            logout() {
+                state.token = null; state.user = null;
+                localStorage.removeItem('campusOS_token'); localStorage.removeItem('campusOS_user');
+                document.getElementById('app-container').style.display = 'none';
+                document.getElementById('auth-screen').style.display = 'flex';
+            },
+
+            showApp() {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('app-container').style.display = 'flex';
+                ui.setTheme(state.data.settings.theme || 'light');
+                this.navigate('dashboard');
+                this.renderAll();
+            },
+
             navigate(view) {
                 document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
                 document.getElementById(`view-${view}`).classList.add('active');
                 document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => el.classList.remove('active'));
                 document.querySelectorAll(`[data-view="${view}"]`).forEach(el => el.classList.add('active'));
-                const titles = { dashboard: 'Dashboard', subjects: 'Subjects & Attendance', grades: 'Grade Planner', assignments: 'Assignments', study: 'Pomodoro Timer', settings: 'Settings' };
+                const titles = { dashboard: 'Dashboard', subjects: 'Attendance', grades: 'Grade Planner', gpa: 'GPA Calculator', assignments: 'Assignments', study: 'Pomodoro', settings: 'Settings' };
                 document.getElementById('page-title').textContent = titles[view] || 'CampusOS';
                 this.renderAll();
             },
+
             renderAll() {
-                render.dashboard(); render.subjects(); render.gradesDropdown(); render.grades(); render.assignments();
+                render.dashboard(); render.subjects(); render.gradesDropdown(); render.grades(); render.assignments(); render.gpa();
             },
 
-            // Subjects
             saveSubject() {
                 const name = document.getElementById('sub-name').value;
                 const req = parseInt(document.getElementById('sub-req').value) || 75;
-                if(!name) return ui.toast('Subject name required', 'danger');
+                if(!name) return ui.toast('Name required', 'danger');
                 state.data.subjects.push({ id: ui.generateId(), name, required: req, attended: 0, total: 0 });
-                ui.closeModal(); this.sync(); ui.toast('Subject added!');
+                ui.closeModal(); this.saveLocal(); ui.toast('Subject saved');
             },
+            
             openSubjectDetail(id) {
                 const sub = state.data.subjects.find(s => s.id === id);
                 if(!sub) return;
-                document.getElementById('det-id').value = sub.id; document.getElementById('det-title').textContent = sub.name;
+                document.getElementById('det-id').value = sub.id;
+                document.getElementById('det-title').textContent = sub.name;
                 const pct = sub.total > 0 ? ((sub.attended / sub.total) * 100).toFixed(1) : 0;
                 document.getElementById('det-att-pct').textContent = `${pct}%`;
-                document.getElementById('det-att-text').textContent = `${sub.attended} attended / ${sub.total} total (Req: ${sub.required}%)`;
-                document.getElementById('det-safe-skip').innerHTML = calc.safeSkips(sub.attended, sub.total, sub.required);
-                ui.openModal('subject-detail-modal', true);
+                document.getElementById('det-att-text').textContent = `${sub.attended} attended / ${sub.total} total`;
+                
+                if (sub.total === 0) { document.getElementById('det-safe-skip').innerHTML = "Attend your first class to calculate."; }
+                else {
+                    const req = sub.required / 100; const current = sub.attended / sub.total;
+                    if (current < req) {
+                        const needed = Math.ceil((req * sub.total - sub.attended) / (1 - req));
+                        document.getElementById('det-safe-skip').innerHTML = `<span style="color:var(--danger)">Attend the next <b>${needed}</b> classes</span> to reach target.`;
+                    } else {
+                        const skips = Math.floor((sub.attended / req) - sub.total);
+                        document.getElementById('det-safe-skip').innerHTML = skips === 0 ? `<span style="color:var(--warning)">Exactly on track. Do not skip.</span>` : `You can safely skip <b style="color:var(--success); font-size:1.2rem;">${skips}</b> classes.`;
+                    }
+                }
+                ui.openModal('subject-detail-modal');
             },
+
             markAttendance(present) {
                 const id = document.getElementById('det-id').value;
                 const sub = state.data.subjects.find(s => s.id === id);
                 if(!sub) return;
                 sub.total++; if(present) sub.attended++;
-                this.sync(); this.openSubjectDetail(id);
-            },
-            deleteSubjectFromDetail() {
-                if(confirm("Delete this subject and all its attendance?")) {
-                    const id = document.getElementById('det-id').value;
-                    state.data.subjects = state.data.subjects.filter(s => s.id !== id);
-                    state.data.assignments = state.data.assignments.filter(a => a.subject !== id);
-                    if(state.data.grades[id]) delete state.data.grades[id];
-                    ui.closeModal(); this.sync(); ui.toast("Subject deleted");
-                }
+                this.saveLocal(); this.openSubjectDetail(id); 
             },
 
-            // Assignments
+            // --- GPA CALCULATOR LOGIC ---
+            saveGpaCourse() {
+                const course = document.getElementById('gpa-course').value;
+                const credits = parseFloat(document.getElementById('gpa-credits').value);
+                const grade = parseFloat(document.getElementById('gpa-grade').value);
+                if(!course || isNaN(credits) || isNaN(grade)) return ui.toast('Invalid input', 'danger');
+                
+                if(!state.data.gpaCourses) state.data.gpaCourses = [];
+                state.data.gpaCourses.push({ id: ui.generateId(), course, credits, grade });
+                ui.closeModal(); this.saveLocal(); ui.toast('Course Grade saved!');
+            },
+            deleteGpaCourse(id) {
+                state.data.gpaCourses = state.data.gpaCourses.filter(c => c.id !== id);
+                this.saveLocal();
+            },
+
             saveAssignment() {
                 const title = document.getElementById('ass-title').value;
-                const sub = document.getElementById('ass-sub').value;
                 const date = document.getElementById('ass-date').value;
-                if(!title || !date) return ui.toast('Title and date required', 'danger');
-                state.data.assignments.push({ id: ui.generateId(), title, subject: sub, dueDate: date, status: 'pending' });
-                ui.closeModal(); this.sync(); ui.toast('Assignment added');
+                if(!title || !date) return ui.toast('Missing fields', 'danger');
+                state.data.assignments.push({ id: ui.generateId(), title, dueDate: date, status: 'pending' });
+                ui.closeModal(); this.saveLocal();
             },
             toggleAssignment(id) {
                 const a = state.data.assignments.find(x => x.id === id);
-                if(a) { a.status = a.status === 'completed' ? 'pending' : 'completed'; this.sync(); }
-            },
-            deleteAssignment(id) {
-                state.data.assignments = state.data.assignments.filter(x => x.id !== id);
-                this.sync();
+                if(a) { a.status = a.status === 'completed' ? 'pending' : 'completed'; this.saveLocal(); }
             },
 
-            // Grades
             saveAssessment() {
                 const subId = document.getElementById('grade-subject-select').value;
-                if(!subId) return ui.toast('Select a subject first!', 'danger');
+                if(!subId) return ui.toast('Select a subject first', 'danger');
                 const name = document.getElementById('gr-name').value;
                 const status = document.getElementById('gr-status').value;
                 const weight = parseFloat(document.getElementById('gr-weight').value);
-                const earned = parseFloat(document.getElementById('gr-earned').value) || 0;
-                const max = parseFloat(document.getElementById('gr-max').value) || 100;
-                if(!name || !weight) return ui.toast('Name and weight required', 'danger');
-                
+                if(!name || !weight) return ui.toast('Invalid input', 'danger');
+                if(!state.data.grades) state.data.grades = {};
                 if(!state.data.grades[subId]) state.data.grades[subId] = [];
-                state.data.grades[subId].push({ id: ui.generateId(), name, status, weight, earned, max });
-                ui.closeModal(); this.sync(); ui.toast('Assessment added');
-            },
-            deleteAssessment(subId, id) {
-                if(state.data.grades[subId]) {
-                    state.data.grades[subId] = state.data.grades[subId].filter(a => a.id !== id);
-                    this.sync();
-                }
+                state.data.grades[subId].push({ id: ui.generateId(), name, status, weight, earned: parseFloat(document.getElementById('gr-earned').value)||0, max: parseFloat(document.getElementById('gr-max').value)||100 });
+                ui.closeModal(); this.saveLocal();
             },
 
-            // Pomodoro
             togglePomodoro() {
                 const btn = document.getElementById('btn-pomo-start');
                 if(state.pomodoro.timer) {
-                    clearInterval(state.pomodoro.timer); state.pomodoro.timer = null; btn.textContent = 'Resume';
+                    clearInterval(state.pomodoro.timer); state.pomodoro.timer = null; btn.textContent = 'Start';
                 } else {
                     btn.textContent = 'Pause';
                     state.pomodoro.timer = setInterval(() => {
                         state.pomodoro.timeLeft--;
                         if(state.pomodoro.timeLeft <= 0) {
-                            clearInterval(state.pomodoro.timer); state.pomodoro.timer = null; btn.textContent = 'Start Focus';
+                            clearInterval(state.pomodoro.timer); state.pomodoro.timer = null; btn.textContent = 'Start';
                             ui.toast(state.pomodoro.mode === 'work' ? 'Time for a break!' : 'Back to work!', 'success');
                             state.pomodoro.mode = state.pomodoro.mode === 'work' ? 'break' : 'work';
                             state.pomodoro.timeLeft = state.pomodoro.mode === 'work' ? 1500 : 300;
                             document.getElementById('pomo-status').textContent = state.pomodoro.mode === 'work' ? 'Focus Session' : 'Short Break';
-                            try { const actx = new (window.AudioContext || window.webkitAudioContext)(); const osc = actx.createOscillator(); osc.connect(actx.destination); osc.frequency.value = 800; osc.start(); setTimeout(()=>osc.stop(), 500); } catch(e){}
                         }
-                        this.updatePomodoroUI();
+                        const m = Math.floor(state.pomodoro.timeLeft / 60).toString().padStart(2, '0');
+                        const s = (state.pomodoro.timeLeft % 60).toString().padStart(2, '0');
+                        document.getElementById('pomo-time').textContent = `${m}:${s}`;
                     }, 1000);
                 }
             },
             resetPomodoro() {
                 if(state.pomodoro.timer) clearInterval(state.pomodoro.timer);
                 state.pomodoro.timer = null; state.pomodoro.mode = 'work'; state.pomodoro.timeLeft = 1500;
-                document.getElementById('btn-pomo-start').textContent = 'Start Focus';
-                document.getElementById('pomo-status').textContent = 'Ready to work';
-                this.updatePomodoroUI();
-            },
-            updatePomodoroUI() {
-                const m = Math.floor(state.pomodoro.timeLeft / 60).toString().padStart(2, '0');
-                const s = (state.pomodoro.timeLeft % 60).toString().padStart(2, '0');
-                document.getElementById('pomo-time').textContent = `${m}:${s}`;
+                document.getElementById('btn-pomo-start').textContent = 'Start';
+                document.getElementById('pomo-status').textContent = 'Focus Session';
+                document.getElementById('pomo-time').textContent = `25:00`;
             },
 
-            // Settings
             updateProfile() {
-                const newName = document.getElementById('set-name').value;
-                state.data.settings.name = newName;
-                this.sync(); ui.toast('Profile saved!');
+                state.data.settings.name = document.getElementById('set-name').value;
+                this.saveLocal(); ui.toast('Profile updated');
             }
         };
 
-        const calc = {
-            safeSkips(attended, total, requiredPct) {
-                if (total === 0) return "Attend your first class to calculate stats.";
-                const req = requiredPct / 100; const current = attended / total;
-                if (current < req) {
-                    const needed = Math.ceil((req * total - attended) / (1 - req));
-                    return `You are below ${requiredPct}%.<br><span style="color:var(--danger)">Attend the next <b>${needed}</b> classes</span> to reach target.`;
-                } else {
-                    const skips = Math.floor((attended / req) - total);
-                    if (skips === 0) return `You are exactly on track. <span style="color:var(--warning)">Do not skip the next class.</span>`;
-                    return `You can safely skip <b style="color:var(--success); font-size:1.2rem;">${skips}</b> consecutive classes.`;
-                }
-            }
-        };
-
+        // === RENDERING ===
         const render = {
             dashboard() {
                 document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-                document.getElementById('dash-greeting').textContent = `Hello, ${state.data.settings.name || state.user.name}!`;
+                document.getElementById('dash-greeting').textContent = `Hello, ${state.data.settings.name || state.user?.name || 'Student'}!`;
 
                 let attTot = 0, classTot = 0;
                 state.data.subjects.forEach(s => { attTot += s.attended; classTot += s.total; });
-                const overallAtt = classTot > 0 ? Math.round((attTot/classTot)*100) : 0;
-                
-                const pendingAss = state.data.assignments.filter(a => a.status !== 'completed').length;
+                document.getElementById('dash-att').textContent = classTot > 0 ? `${Math.round((attTot/classTot)*100)}%` : '--';
 
-                document.getElementById('dash-att').textContent = classTot > 0 ? `${overallAtt}%` : '--';
-                document.getElementById('dash-assignments').textContent = pendingAss;
-                document.getElementById('dash-subjects').textContent = state.data.subjects.length;
+                // Display Dashboard GPA
+                let tCred = 0, tPoints = 0;
+                if(state.data.gpaCourses) {
+                    state.data.gpaCourses.forEach(c => { tCred += c.credits; tPoints += (c.credits * c.grade); });
+                }
+                document.getElementById('dash-gpa').textContent = tCred > 0 ? (tPoints / tCred).toFixed(2) : '0.00';
 
                 const actionsDiv = document.getElementById('dash-actions');
-                const pendList = state.data.assignments.filter(a => a.status !== 'completed').sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).slice(0,4);
-                
-                actionsDiv.innerHTML = pendList.length === 0 ? '<div class="empty-state">No upcoming tasks! 🎉</div>' : '';
-                pendList.forEach(a => {
-                    const subName = state.data.subjects.find(s=>s.id === a.subject)?.name || 'General';
-                    actionsDiv.innerHTML += `
-                        <div class="list-item">
-                            <div class="flex gap-2 align-center">
-                                <input type="checkbox" style="width:auto; margin:0;" onchange="app.toggleAssignment('${a.id}')">
-                                <div class="list-item-content">
-                                    <h4>${a.title}</h4>
-                                    <p>${subName} • Due: ${ui.formatDate(a.dueDate)}</p>
-                                </div>
-                            </div>
-                        </div>`;
-                });
+                const pend = state.data.assignments.filter(a => a.status !== 'completed').slice(0,3);
+                actionsDiv.innerHTML = pend.length === 0 ? '<p class="text-muted">All caught up! 🎉</p>' : '';
+                pend.forEach(a => { actionsDiv.innerHTML += `<div class="list-item"><h4>${a.title}</h4></div>`; });
             },
             subjects() {
                 const container = document.getElementById('subjects-container');
-                container.innerHTML = state.data.subjects.length === 0 ? '<div class="empty-state" style="grid-column: 1/-1;">No subjects added. Add your classes to track attendance!</div>' : '';
-                const select = document.getElementById('ass-sub');
-                select.innerHTML = '<option value="">Select Subject (Optional)...</option>';
-
+                container.innerHTML = state.data.subjects.length === 0 ? '<div class="empty-state text-muted">No subjects added.</div>' : '';
                 state.data.subjects.forEach(sub => {
                     const pct = sub.total > 0 ? Math.round((sub.attended / sub.total) * 100) : 0;
-                    let statusClass = 'success';
-                    if (pct < sub.required) statusClass = 'danger';
-                    else if (pct < sub.required + 5) statusClass = 'warning';
-
+                    let stat = pct < sub.required ? 'danger' : (pct < sub.required + 5 ? 'warning' : 'success');
                     container.innerHTML += `
                         <div class="card" style="cursor:pointer;" onclick="app.openSubjectDetail('${sub.id}')">
-                            <div class="flex justify-between align-center mb-1">
-                                <h3>${sub.name}</h3>
-                                <span class="badge ${statusClass}">${pct}%</span>
-                            </div>
-                            <div class="progress-bar"><div class="progress-fill ${statusClass}" style="width: ${pct}%"></div></div>
+                            <div class="flex justify-between align-center mb-1"><h3>${sub.name}</h3><span class="badge ${stat}">${pct}%</span></div>
+                            <div class="progress-bar"><div class="progress-fill ${stat}" style="width: ${pct}%"></div></div>
                             <p class="text-muted mt-1" style="font-size:0.8rem;">Req: ${sub.required}% | ${sub.attended}/${sub.total} classes</p>
                         </div>`;
-                    select.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
                 });
+            },
+            gpa() {
+                const container = document.getElementById('gpa-container');
+                let tCred = 0, tPoints = 0;
+                
+                if(!state.data.gpaCourses || state.data.gpaCourses.length === 0) {
+                    container.innerHTML = '<p class="text-muted" style="padding:20px 0;">No courses added yet. Add a course to calculate your GPA.</p>';
+                    document.getElementById('gpa-total-display').textContent = '0.00';
+                    document.getElementById('gpa-credits-display').textContent = '0';
+                    return;
+                }
+
+                container.innerHTML = '';
+                state.data.gpaCourses.forEach(c => {
+                    tCred += c.credits; tPoints += (c.credits * c.grade);
+                    container.innerHTML += `
+                        <div class="list-item">
+                            <div class="list-item-content">
+                                <h4>${c.course}</h4>
+                                <p>Credits: ${c.credits} | Grade Point: ${c.grade}</p>
+                            </div>
+                            <button class="icon-btn" onclick="app.deleteGpaCourse('${c.id}')" style="color:var(--danger)">🗑</button>
+                        </div>`;
+                });
+
+                document.getElementById('gpa-credits-display').textContent = tCred;
+                document.getElementById('gpa-total-display').textContent = tCred > 0 ? (tPoints / tCred).toFixed(2) : '0.00';
             },
             assignments() {
                 const container = document.getElementById('assignments-container');
-                container.innerHTML = state.data.assignments.length === 0 ? '<div class="empty-state">No assignments tracked.</div>' : '';
-                state.data.assignments.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).forEach(ass => {
-                    const sub = state.data.subjects.find(s => s.id === ass.subject)?.name || 'General';
+                container.innerHTML = state.data.assignments.length === 0 ? '<div class="text-muted text-center py-2">No assignments.</div>' : '';
+                state.data.assignments.forEach(ass => {
                     const checked = ass.status === 'completed' ? 'checked' : '';
-                    const lineThrough = ass.status === 'completed' ? 'text-decoration: line-through; opacity: 0.6;' : '';
+                    const line = ass.status === 'completed' ? 'text-decoration: line-through; opacity: 0.6;' : '';
                     container.innerHTML += `
-                        <div class="list-item">
-                            <div class="flex gap-2 align-center" style="${lineThrough}">
+                        <div class="list-item" style="${line}">
+                            <div class="flex gap-2 align-center">
                                 <input type="checkbox" style="width:auto; margin:0;" ${checked} onchange="app.toggleAssignment('${ass.id}')">
-                                <div class="list-item-content">
-                                    <h4>${ass.title}</h4>
-                                    <p>${sub} • Due: ${ui.formatDate(ass.dueDate)}</p>
-                                </div>
+                                <h4>${ass.title}</h4>
                             </div>
-                            <button class="icon-btn" onclick="app.deleteAssignment('${ass.id}')" title="Delete">🗑️</button>
                         </div>`;
                 });
             },
             gradesDropdown() {
                 const select = document.getElementById('grade-subject-select');
-                const currentVal = select.value;
                 select.innerHTML = '<option value="">Select a Subject...</option>';
                 state.data.subjects.forEach(sub => { select.innerHTML += `<option value="${sub.id}">${sub.name}</option>`; });
-                if(currentVal && state.data.subjects.find(s=>s.id === currentVal)) select.value = currentVal;
             },
             grades() {
                 const subId = document.getElementById('grade-subject-select').value;
                 const container = document.getElementById('grade-planner-content');
-                if(!subId) { container.innerHTML = '<div class="empty-state">Select a subject above to manage its grades.</div>'; return; }
-
+                if(!subId) { container.innerHTML = ''; return; }
                 const assessments = (state.data.grades && state.data.grades[subId]) ? state.data.grades[subId] : [];
-                let totalWeight = 0, completedWeight = 0, earnedWeight = 0;
-                assessments.forEach(a => {
-                    totalWeight += a.weight;
-                    if(a.status === 'Completed') { completedWeight += a.weight; earnedWeight += (a.earned / a.max) * a.weight; }
-                });
-
-                let currentGrade = completedWeight > 0 ? (earnedWeight / completedWeight) * 100 : 0;
-                let weightWarning = totalWeight > 100 ? `<div class="badge danger mt-1">Warning: Weights exceed 100% (${totalWeight}%)</div>` : '';
-
+                let totW = 0, compW = 0, earnW = 0;
+                assessments.forEach(a => { totW += a.weight; if(a.status === 'Completed') { compW += a.weight; earnW += (a.earned / a.max) * a.weight; } });
+                let currGrade = compW > 0 ? (earnW / compW) * 100 : 0;
+                
                 let html = `
                     <div class="grid-cards mt-1">
-                        <div class="card stat-card"><span class="label">Current Average</span><span class="value" style="color:var(--primary)">${currentGrade.toFixed(2)}%</span></div>
-                        <div class="card stat-card"><span class="label">Syllabus Weight Tracked</span><span class="value">${totalWeight}%</span>${weightWarning}</div>
+                        <div class="card stat-card"><span class="label">Current Grade</span><span class="value" style="color:var(--primary)">${currGrade.toFixed(2)}%</span></div>
+                        <div class="card stat-card"><span class="label">Weight Tracked</span><span class="value">${totW}%</span></div>
                     </div>
-                    <div class="flex justify-between align-center mb-1">
-                        <h3>Assessments</h3><button class="btn btn-outline" style="padding: 5px 10px;" onclick="ui.openModal('assessment-modal')">+ Add Assessment</button>
-                    </div><div class="card">`;
-
-                if(assessments.length === 0) {
-                    html += `<p class="text-muted text-center" style="padding: 20px 0;">No exams or assignments added yet.</p>`;
-                } else {
-                    assessments.forEach(a => {
-                        html += `
-                            <div class="list-item">
-                                <div class="list-item-content">
-                                    <h4>${a.name} <span class="badge ${a.status==='Completed'?'success':'warning'}" style="margin-left:10px">${a.status}</span></h4>
-                                    <p>Weight: ${a.weight}% ${a.status==='Completed' ? `| Score: ${a.earned}/${a.max}` : ''}</p>
-                                </div>
-                                <button class="icon-btn" onclick="app.deleteAssessment('${subId}', '${a.id}')" title="Delete">🗑️</button>
-                            </div>`;
-                    });
-                }
-                html += `</div>`;
-
-                if (totalWeight <= 100 && totalWeight > completedWeight) {
-                    const remainingWeight = totalWeight - completedWeight;
-                    html += `
-                    <div class="card mt-1">
-                        <h3>What-If Predictor</h3>
-                        <p class="text-muted" style="margin-bottom:10px">If you average X% on the remaining ${remainingWeight}% of the course:</p>
-                        <table style="width:100%; border-collapse: collapse; text-align:left;">
-                            <tr style="border-bottom:1px solid var(--border)"><th>Average on Remaining</th><th>Predicted Final Grade</th></tr>`;
-                    [50, 60, 70, 80, 90, 100].forEach(sim => {
-                        const simFinal = earnedWeight + (sim/100 * remainingWeight);
-                        html += `<tr><td style="padding:10px 0">${sim}%</td><td style="padding:10px 0; font-weight:bold; color:var(--primary)">${simFinal.toFixed(2)}%</td></tr>`;
-                    });
-                    html += `</table></div>`;
-                }
-                container.innerHTML = html;
+                    <div class="flex justify-between align-center mb-1"><h3>Assessments</h3><button class="btn btn-outline" style="padding: 5px 10px;" onclick="ui.openModal('assessment-modal')">+ Add</button></div>
+                    <div class="card">
+                `;
+                if(assessments.length === 0) html += `<p class="text-muted">No assessments added.</p>`;
+                else assessments.forEach(a => { html += `<div class="list-item"><h4>${a.name} <span class="badge ${a.status==='Completed'?'success':'warning'}">${a.status}</span></h4><p>Weight: ${a.weight}%</p></div>`; });
+                container.innerHTML = html + `</div>`;
             }
         };
 
